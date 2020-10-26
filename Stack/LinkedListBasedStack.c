@@ -97,14 +97,9 @@ int main()
 		switch(key)
 		{
 			case 1:
-				printf("\nEnter the number of elements to Push\n");
-				scanf("%d",&n);
-				printf("\nEnter the elements to be pushed:\n");
-				for(int i=0;i<n;i++)
-				{
-					scanf("%d",&temp);
-					Push(temp);
-				}
+				printf("\nEnter the element to be pushed:\n");
+				scanf("%d",&temp);
+				Push(temp);
 				break;
 			case 2:
 				Pop();

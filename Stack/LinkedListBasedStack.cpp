@@ -1,24 +1,31 @@
 // Linked List Based Implementation of Stack
+
 #include<iostream>
 using namespace std;
 
 class Node
 {
-	public:
+	private:
 		int data;
+	public:
 		Node* next;
 		Node(int x)
 		{
 			data = x;
 			next = NULL;
-		}	
+		}
+
+		int getData()
+		{
+			return data;
+		}
 };
-class Linked_List_Stack
+class Stack
 {
 	private:
 		Node* top;
 	public:
-		Linked_List_Stack()
+		Stack()
 		{
 			top = NULL;
 		}
@@ -34,7 +41,7 @@ class Linked_List_Stack
 		{
 			if(top == NULL)
 			{
-				cout<<"ERROR : Can't Pop. Stack is Empty";
+				cout<<"\nERROR : Pop Failed - Stack is Empty\n";
 				return;
 			}
 			Node* temp = top;
@@ -46,9 +53,9 @@ class Linked_List_Stack
 		{
 			if(top!=NULL)
 			{
-				return top->data;
+				return top->getData();
 			}
-			cout<<"ERROR : Stack is Empty ";
+			cout<<"\nERROR : Stack is Empty\n";
 			return 0;
 		}
 
@@ -62,38 +69,60 @@ class Linked_List_Stack
 		}
 		void Print()
 		{
-			cout<<"Stack : ";
+			cout<<"\nStack : ";
 			Node* temp = top;
 			while(temp !=NULL )
 			{
-				cout<<temp->data<<" ";
+				cout<<temp->getData()<<" ";
 				temp = temp->next;
 			}
 			cout<<"\n";
 		}
 };
+
 int main()
 {
-	Linked_List_Stack stack;
-	stack.Pop();
-	cout<<(stack.IsEmpty()?"\nStack is Empty\n":"\nStack is Not Empty\n");
-	stack.Push(5); stack.Print();
-	stack.Push(4); stack.Print();
-	stack.Push(3); stack.Print();
-	stack.Push(2); stack.Print();
-	stack.Push(1); stack.Print();
-	stack.Pop();   stack.Print();
-	stack.Pop();
-	stack.Pop();
-	stack.Pop();
-	stack.Pop();
-	stack.Print();
-	int top = stack.Top();
-	if(top)
+	Stack S;
+	int key,temp;
+	while(1)
 	{
-		cout<<top;
-	}
-	cout<<(stack.IsEmpty()?"\nStack is Empty\n":"\nStack is Not Empty\n");
-	return 0;
+		S.Print();
+		cout<<
+			"\nOption:1-Push\n"
+			"Option:2-Pop\n"
+			"Option:3-IsEmpty\n"
+			"Option:4-Get Top Element\n"
+			"Option:5-Exit\n"
+			"Select an Option: "
+		;
 
+		cin>>key;
+		switch(key)
+		{
+			case 1:
+				cout<<"\nEnter the element to be pushed:\n";
+				cin>>temp;
+				S.Push(temp);
+				break;
+			case 2:
+				S.Pop();
+				break;
+			case 3:
+				if(S.IsEmpty())
+				{
+					cout<<"\nYes\n";
+					break;
+				}
+				cout<<"\nNo\n";
+				break;
+			case 4:
+				cout<<"\nTop Element: "<<S.Top()<<"\n";
+			 	break;
+			case 5:
+				return 0;
+			default:
+				cout<<"\nSelect a valid option\n";
+		}
+	}
+	return 0;
 }
