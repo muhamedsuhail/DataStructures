@@ -1,4 +1,5 @@
 // Linked List Based Implementation of Stack
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
