@@ -29,6 +29,7 @@ class Stack
 		{
 			top = NULL;
 		}
+
 		void Push(int x)
 		{
 			Node* temp = top;
@@ -67,6 +68,7 @@ class Stack
 			}
 			return true;
 		}
+
 		void Print()
 		{
 			cout<<"\nStack : ";
@@ -108,12 +110,7 @@ int main()
 				S.Pop();
 				break;
 			case 3:
-				if(S.IsEmpty())
-				{
-					cout<<"\nYes\n";
-					break;
-				}
-				cout<<"\nNo\n";
+				cout<<((S.IsEmpty())?"YES":"NO")
 				break;
 			case 4:
 				cout<<"\nTop Element: "<<S.Top()<<"\n";
