@@ -20,6 +20,7 @@ class Node
 			return data;
 		}
 };
+
 class Stack
 {
 	private:
