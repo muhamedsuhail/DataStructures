@@ -1,0 +1,44 @@
+Doubly Linked List: 
+
+Option:1-Insert at Head
+Option:2-Insert at Tail
+Option:3-Insert at n
+Option:4-Delete at n
+Option:5-Print Reversed List
+Option:6-Reverse List Iteratively
+Option:7-Reverse List Recursively
+Option:8-Exit
+Enter an Option: Enter the number to be Inserted: 
+Doubly Linked List: 5 
+
+Option:1-Insert at Head
+Option:2-Insert at Tail
+Option:3-Insert at n
+Option:4-Delete at n
+Option:5-Print Reversed List
+Option:6-Reverse List Iteratively
+Option:7-Reverse List Recursively
+Option:8-Exit
+Enter an Option: Enter the number to be Inserted: 
+Doubly Linked List: 4 5 
+
+Option:1-Insert at Head
+Option:2-Insert at Tail
+Option:3-Insert at n
+Option:4-Delete at n
+Option:5-Print Reversed List
+Option:6-Reverse List Iteratively
+Option:7-Reverse List Recursively
+Option:8-Exit
+Enter an Option: Enter the number to be Inserted: 
+Doubly Linked List: 6 4 5 
+
+Option:1-Insert at Head
+Option:2-Insert at Tail
+Option:3-Insert at n
+Option:4-Delete at n
+Option:5-Print Reversed List
+Option:6-Reverse List Iteratively
+Option:7-Reverse List Recursively
+Option:8-Exit
+Enter an Option: 
