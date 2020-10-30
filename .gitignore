@@ -33,3 +33,6 @@
 
 # I/O
 *.in
+
+# Ignore Extensionless files
+!*.*
