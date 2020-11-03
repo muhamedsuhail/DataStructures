@@ -12,15 +12,124 @@ struct Node
 
 struct Node* root;
 
-struct Node* CreateNewNode(int x)
+// Function Prototypes
+
+struct Node* CreateNewNode(int data);
+int max(int A, int B);
+
+struct Node* InsertRecursive(int data, struct Node* rootptr);
+void InsertIterative(int data);
+
+void SearchRecursive(int data, struct Node* rootptr);
+void SearchIterative(int data);
+
+int MinMaxIterative(bool flag);
+int MinMaxRecursive(struct Node* rootptr, bool flag);
+
+int Height(struct Node* rootptr);
+
+void LevelN(struct Node* rootptr, int level);
+void LevelOrderTraversal(struct Node* rootptr);
+
+void PreOrder(struct Node* rootptr);
+void InOrder(struct Node* rootptr);
+void PostOrder(struct Node* rootptr);
+
+
+int main()
+{
+	root = NULL;
+	int key,temp;
+	while(1)
+	{
+		printf(
+			"\nOption:1-Insert (Recursive)\n"
+			"Option:2-Insert (Iterative)\n"
+			"Option:3-Search (Recursive)\n"
+			"Option:4-Search (Iterative)\n"
+			"Option:5-Minimum Element (Recursive)\n"
+			"Option:6-Minimum Element (Iterative)\n"
+			"Option:7-Maximum Element (Recursive)\n"
+			"Option:8-Maximum Element (Iterative)\n"
+			"Option:9-Height of the BST\n"
+			"Option:10-Level Order Traversal\n"
+			"Option:11-PreOrder Traversal\n"
+			"Option:12-InOrder Traversal\n"
+			"Option:13-PostOrder Traversal\n"
+			"Option:14-Exit\n\n"
+			"Select an Option: "
+		);
+
+		scanf("%d",&key);
+		switch(key)
+		{
+			case 1:
+				printf("\nEnter the element to be inserted: ");
+				scanf("%d",&temp);
+				root = InsertRecursive(temp,root);
+				break;
+			case 2:
+				printf("\nEnter the element to be inserted: ");
+				scanf("%d",&temp);
+				InsertIterative(temp);
+				break;
+			case 3:
+				printf("\nEnter the element to be searched: ");
+				scanf("%d",&temp);
+				SearchRecursive(temp,root);
+				break;
+			case 4:
+				printf("\nEnter the element to be searched: ");
+				scanf("%d",&temp);
+				SearchIterative(temp);
+				break;
+			case 5:
+				printf("\nMinimum Element - %d",MinMaxRecursive(root,0));
+				break;
+			case 6:
+				printf("\nMinimum Element - %d",MinMaxIterative(0));
+				break;
+			case 7:
+				printf("\nMaximum Element - %d",MinMaxRecursive(root,1));
+				break;
+			case 8:
+				printf("\nMaximum Element - %d",MinMaxIterative(1));
+				break;
+			case 9:
+				printf("\nHeight of the BST - %d",Height(root));
+				break;
+			case 10:
+				printf("\nLevel Order Traversal: ");
+				LevelOrderTraversal(root);
+				break;
+			case 11:
+				printf("\nPreOrder Traversal: ");
+				PreOrder(root);
+				break;
+			case 12:
+				printf("\nInOrder Traversal: ");
+				InOrder(root);
+				break;
+			case 13:
+				printf("\nPostOrder Traversal: ");
+				PostOrder(root);
+				break;
+			case 14:
+				return 0;
+		}
+		printf("\n");
+	}
+}
+
+struct Node* CreateNewNode(int data)
 {
 	struct Node* newNode = (struct Node*)malloc(sizeof(struct Node*));
-	newNode->data = x;
+	newNode->data = data;
 	newNode->left = newNode->right = NULL;
 	return newNode;
 }
 
-struct Node* InsertRecursive(int x, struct Node* rootptr)
+struct Node* InsertRecursive(int data, struct Node* rootptr)
 {
 	if(rootptr == NULL)
 	{
@@ -28,27 +137,27 @@ struct Node* InsertRecursive(int x, struct Node* rootptr)
 		// Or
 		// When the funcion hits base condition(lead node) -> 
 		// where the value to be inserted fits into the BST
-		struct Node* newNode = CreateNewNode(x);
+		struct Node* newNode = CreateNewNode(data);
 		rootptr = newNode;
 		return rootptr;
 	}
 
 	// Passing root of left/right subtree as parameter
-	else if(x <= rootptr->data)
+	else if(data <= rootptr->data)
 	{	
-		rootptr->left = InsertRecursive(x,rootptr->left);
+		rootptr->left = InsertRecursive(data,rootptr->left);
 	}
 	else
 	{
-		rootptr->right = InsertRecursive(x,rootptr->right);
+		rootptr->right = InsertRecursive(data,rootptr->right);
 	}
 
 	return rootptr;
 }
 
-void InsertIterative(int x)
+void InsertIterative(int data)
 {
-	struct Node* newNode = CreateNewNode(x);
+	struct Node* newNode = CreateNewNode(data);
 	struct Node* current = root;
 
 	if(root == NULL)
@@ -61,7 +170,7 @@ void InsertIterative(int x)
 	while(1)
 	{
 		// Executes until the funciton reaches the desired leaf node
-		if(x <= current->data)
+		if(data <= current->data)
 		{
 			if(current->left == NULL)
 			{
@@ -83,7 +192,7 @@ void InsertIterative(int x)
 	printf("\n");
 }	
 
-void SearchRecursive(int x, struct Node* rootptr)
+void SearchRecursive(int data, struct Node* rootptr)
 {
 	if(rootptr==NULL)
 	{
@@ -93,22 +202,22 @@ void SearchRecursive(int x, struct Node* rootptr)
 		printf("Not Found\n");
 		return;
 	}
-	else if(rootptr->data == x)
+	else if(rootptr->data == data)
 	{
 		printf("Found\n");
 	}
 	// Passing root of left/right subtree as parameter
-	else if(x <= rootptr->data)
+	else if(data <= rootptr->data)
 	{
-		SearchRecursive(x,rootptr->left);
+		SearchRecursive(data,rootptr->left);
 	}
 	else
 	{
-		SearchRecursive(x,rootptr->right);
+		SearchRecursive(data,rootptr->right);
 	}
 }
 
-void SearchIterative(int x)
+void SearchIterative(int data)
 {
 	struct Node* current = root;
 	if(root == NULL)
@@ -120,13 +229,13 @@ void SearchIterative(int x)
 	// Executes until the function reaches the desired leaf node 
 	do
 	{
-		if(current->data == x)
+		if(current->data == data)
 		{
 			printf("Found\n");
 			return;
 		}
 
-		else if(x < current->data)
+		else if(data < current->data)
 		{
 			if(current->left == NULL)
 			{
@@ -264,89 +373,4 @@ void PostOrder(struct Node* rootptr)
 	PostOrder(rootptr->left);
 	PostOrder(rootptr->right);
 	printf("%d ",rootptr->data);
-}
-
-int main()
-{
-	root = NULL;
-	int key,temp;
-	while(1)
-	{
-		printf(
-			"\nOption:1-Insert (Recursive)\n"
-			"Option:2-Insert (Iterative)\n"
-			"Option:3-Search (Recursive)\n"
-			"Option:4-Search (Iterative)\n"
-			"Option:5-Minimum Element (Recursive)\n"
-			"Option:6-Minimum Element (Iterative)\n"
-			"Option:7-Maximum Element (Recursive)\n"
-			"Option:8-Maximum Element (Iterative)\n"
-			"Option:9-Height of the BST\n"
-			"Option:10-Level Order Traversal\n"
-			"Option:11-PreOrder Traversal\n"
-			"Option:12-InOrder Traversal\n"
-			"Option:13-PostOrder Traversal\n"
-			"Option:14-Exit\n\n"
-			"Select an Option: "
-		);
-
-		scanf("%d",&key);
-		switch(key)
-		{
-			case 1:
-				printf("\nEnter the element to be inserted: ");
-				scanf("%d",&temp);
-				root = InsertRecursive(temp,root);
-				break;
-			case 2:
-				printf("\nEnter the element to be inserted: ");
-				scanf("%d",&temp);
-				InsertIterative(temp);
-				break;
-			case 3:
-				printf("\nEnter the element to be searched: ");
-				scanf("%d",&temp);
-				SearchRecursive(temp,root);
-				break;
-			case 4:
-				printf("\nEnter the element to be searched: ");
-				scanf("%d",&temp);
-				SearchIterative(temp);
-				break;
-			case 5:
-				printf("\nMinimum Element - %d",MinMaxRecursive(root,0));
-				break;
-			case 6:
-				printf("\nMinimum Element - %d",MinMaxIterative(0));
-				break;
-			case 7:
-				printf("\nMaximum Element - %d",MinMaxRecursive(root,1));
-				break;
-			case 8:
-				printf("\nMaximum Element - %d",MinMaxIterative(1));
-				break;
-			case 9:
-				printf("\nHeight of the BST - %d",Height(root));
-				break;
-			case 10:
-				printf("\nLevel Order Traversal: ");
-				LevelOrderTraversal(root);
-				break;
-			case 11:
-				printf("\nPreOrder Traversal: ");
-				PreOrder(root);
-				break;
-			case 12:
-				printf("\nInOrder Traversal: ");
-				InOrder(root);
-				break;
-			case 13:
-				printf("\nPostOrder Traversal: ");
-				PostOrder(root);
-				break;
-			case 14:
-				return 0;
-		}
-		printf("\n");
-	}
 }

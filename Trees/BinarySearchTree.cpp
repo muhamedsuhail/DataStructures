@@ -21,6 +21,11 @@ class Node
 		{
 			return data;
 		}
+
+		void setData(int x)
+		{
+			data = x;
+		}
 };
 
 class BST
@@ -31,12 +36,14 @@ public:
 	// Function Prototypes
 	BST();
 
-	Node* InsertRecursive(int x, Node* rootptr);
-	void InsertIterative(int x);	
+	Node* InsertRecursive(int data, Node* rootptr);
+	void InsertIterative(int data);	
 	
-	void SearchRecursive(int x, Node* rootptr);
-	void SearchIterative(int x);
-	
+	void SearchRecursive(int data, Node* rootptr);
+	void SearchIterative(int data);
+		
+	Node* Delete(Node* rootptr,int data);
+
 	int MinMaxIterative(bool flag);
 	int MinMaxRecursive(Node* rootptr, bool flag);
 	
@@ -49,29 +56,33 @@ public:
 	void PreOrder(Node* rootptr);
 	void InOrder(Node* rootptr);
 	void PostOrder(Node* rootptr);
+
+	int InOrderSuccessor(Node* rootptr,int data);
 };
 
 int main()
 {
 	BST T;
 	int key,temp;
+	cout<<"\n";
 	while(1)
 	{
 		cout<<
-			"Option:1-Insert (Recursive)\n"
-			"Option:2-Insert (Iterative)\n"
-			"Option:3-Search (Recursive)\n"
-			"Option:4-Search (Iterative)\n"
-			"Option:5-Minimum Element (Recursive)\n"
-			"Option:6-Minimum Element (Iterative)\n"
-			"Option:7-Maximum Element (Recursive)\n"
-			"Option:8-Maximum Element (Iterative)\n"
-			"Option:9-Height of the BST\n"
-			"Option:10-BFS-Level Order Traversal\n"
-			"Option:11-DFS-PreOrder Traversal\n"
-			"Option:12-DFS-InOrder Traversal\n"
-			"Option:13-DFS-PostOrder Traversal\n"
-			"Option:14-Exit\n\n"
+			"Option:1-Insert a Node(Recursive)\n"
+			"Option:2-Insert a Node(Iterative)\n"
+			"Option:3-Search for a Node(Recursive)\n"
+			"Option:4-Search for a Node(Iterative)\n"
+			"Option:5-Delete a Node\n"
+			"Option:6-Minimum Element (Recursive)\n"
+			"Option:7-Minimum Element (Iterative)\n"
+			"Option:8-Maximum Element (Recursive)\n"
+			"Option:9-Maximum Element (Iterative)\n"
+			"Option:10-Height of the BST\n"
+			"Option:11-BFS-Level Order Traversal\n"
+			"Option:12-DFS-PreOrder Traversal\n"
+			"Option:13-DFS-InOrder Traversal\n"
+			"Option:14-DFS-PostOrder Traversal\n"
+			"Option:15-Exit\n\n"
 			"Select an Option: "
 		;
 
@@ -99,37 +110,42 @@ int main()
 				T.SearchIterative(temp);
 				break;
 			case 5:
-				cout<<"\nMinimum Element - "<<T.MinMaxRecursive(T.root,0);
+				cout<<"\nEnter the element to be deleted: ";
+				cin>>temp;
+				T.root = T.Delete(T.root,temp);
 				break;
 			case 6:
-				cout<<"\nMinimum Element - "<<T.MinMaxIterative(0);
+				cout<<"\nMinimum Element - "<<T.MinMaxRecursive(T.root,0);
 				break;
 			case 7:
-				cout<<"\nMaximum Element - "<<T.MinMaxRecursive(T.root,1);
+				cout<<"\nMinimum Element - "<<T.MinMaxIterative(0);
 				break;
 			case 8:
-				cout<<"\nMaximum Element - "<<T.MinMaxIterative(1);
+				cout<<"\nMaximum Element - "<<T.MinMaxRecursive(T.root,1);
 				break;
 			case 9:
-				cout<<"\nHeight of the BST - "<<T.Height(T.root);
+				cout<<"\nMaximum Element - "<<T.MinMaxIterative(1);
 				break;
 			case 10:
+				cout<<"\nHeight of the BST - "<<T.Height(T.root);
+				break;
+			case 11:
 				cout<<"\nLevel Order Traversal: ";
 				T.LevelOrderTraversal();
 				break;
-			case 11:
+			case 12:
 				cout<<"\nPreOrder Traversal: ";
 				T.PreOrder(T.root);
 				break;
-			case 12:
+			case 13:
 				cout<<"\nInOrder Traversal: ";
 				T.InOrder(T.root);
 				break;
-			case 13:
+			case 14:
 				cout<<"\nPostOrder Traversal: ";
 				T.PostOrder(T.root);
 				break;
-			case 14:
+			case 15:
 				return 0;
 		}
 		cout<<"\n\n";
@@ -141,7 +157,7 @@ BST::BST()
 	root = NULL;
 }
 
-Node* BST::InsertRecursive(int x, Node* rootptr)
+Node* BST::InsertRecursive(int data, Node* rootptr)
 {
 	if(rootptr == NULL)
 	{
@@ -149,26 +165,26 @@ Node* BST::InsertRecursive(int x, Node* rootptr)
 		// Or
 		// When the funcion hits base condition(lead node) -> 
 		// where the value to be inserted fits into the BST
-		Node* newNode = new Node(x);
+		Node* newNode = new Node(data);
 		rootptr = newNode;
 		return rootptr;
 	}
 	// Passing root of left/right subtree as parameter
-	else if(x <= rootptr->getData())
+	else if(data <= rootptr->getData())
 	{	
-		rootptr->left = InsertRecursive(x,rootptr->left);
+		rootptr->left = InsertRecursive(data,rootptr->left);
 	}
 	else
 	{
-		rootptr->right = InsertRecursive(x,rootptr->right);
+		rootptr->right = InsertRecursive(data,rootptr->right);
 	}
 
 	return rootptr;
 }
 
-void BST::InsertIterative(int x)
+void BST::InsertIterative(int data)
 {
-	Node* newNode = new Node(x);
+	Node* newNode = new Node(data);
 	Node* current = root;
 
 	if(root == NULL)
@@ -181,7 +197,7 @@ void BST::InsertIterative(int x)
 	while(1)
 	{
 		// Executes until the funciton reaches the desired leaf node
-		if(x <= current->getData())
+		if(data <= current->getData())
 		{
 			if(current->left == NULL)
 			{
@@ -203,7 +219,7 @@ void BST::InsertIterative(int x)
 	cout<<endl;
 }
 
-void BST::SearchRecursive(int x, Node* rootptr)
+void BST::SearchRecursive(int data, Node* rootptr)
 {
 	if(rootptr==NULL)
 	{
@@ -213,23 +229,23 @@ void BST::SearchRecursive(int x, Node* rootptr)
 		cout<<"Not Found\n";
 		return;
 	}
-	else if(rootptr->getData() == x)
+	else if(rootptr->getData() == data)
 	{
 		cout<<"Found\n";
 	}
 	// Passing root of left/right subtree as parameter
-	else if(x <= rootptr->getData())
+	else if(data <= rootptr->getData())
 	{
 
-		SearchRecursive(x,rootptr->left);
+		SearchRecursive(data,rootptr->left);
 	}
 	else
 	{
-		SearchRecursive(x,rootptr->right);
+		SearchRecursive(data,rootptr->right);
 	}
 }
 
-void BST::SearchIterative(int x)
+void BST::SearchIterative(int data)
 {
 	Node* current = root;
 	if(root == NULL)
@@ -240,13 +256,13 @@ void BST::SearchIterative(int x)
 	// Executes until the function reaches the desired leaf node 
 	do
 	{
-		if(current->getData() == x)
+		if(current->getData() == data)
 		{
 			cout<<"Found\n";
 			return;
 		}
 
-		else if(x < current->getData())
+		else if(data < current->getData())
 		{
 			if(current->left == NULL)
 			{
@@ -266,6 +282,54 @@ void BST::SearchIterative(int x)
 	while(current->left != NULL || current->right != NULL);
 	
 	cout<<"Not Found\n";
+}
+
+Node* BST::Delete(Node* rootptr,int data)
+{
+	if(rootptr == NULL) return rootptr;
+	if(data < rootptr->getData())
+	{
+		rootptr->left = Delete(rootptr->left,data);
+	}
+	else if(data > rootptr->getData())
+	{
+		rootptr->right = Delete(rootptr->right,data);
+	}
+	else
+	{
+		// case:1 Node has no child
+		if(rootptr->left == NULL && rootptr->right == NULL)
+		{
+			delete rootptr;
+			rootptr = NULL;
+			return rootptr;
+		}
+
+		// case:2 Node has only one child
+		else if(rootptr->left == NULL)
+		{
+			Node* nodeToDelete = rootptr;
+			rootptr = rootptr->right;
+			delete nodeToDelete;
+		}
+
+		else if(rootptr->right == NULL)
+		{
+			Node* nodeToDelete = rootptr;
+			rootptr = rootptr->left;
+			delete nodeToDelete;
+		}
+
+		// case:3 Node has two children
+		else
+		{
+			int minOfRight = MinMaxRecursive(rootptr->right,0);
+			rootptr->setData(minOfRight);
+			rootptr->right = Delete(rootptr->right,minOfRight);
+		}
+
+	}
+	return rootptr;
 }
 
 int BST::MinMaxIterative(bool flag)
