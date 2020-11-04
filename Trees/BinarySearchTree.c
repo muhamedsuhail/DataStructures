@@ -28,9 +28,11 @@ int MinMaxRecursive(struct Node* rootptr, bool flag);
 
 int Height(struct Node* rootptr);
 
+// BFS
 void LevelN(struct Node* rootptr, int level);
 void LevelOrderTraversal(struct Node* rootptr);
 
+// DFS
 void PreOrder(struct Node* rootptr);
 void InOrder(struct Node* rootptr);
 void PostOrder(struct Node* rootptr);
