@@ -39,13 +39,13 @@ public:
 	Node* InsertRecursive(int data, Node* rootptr);
 	void InsertIterative(int data);	
 	
-	void SearchRecursive(int data, Node* rootptr);
-	void SearchIterative(int data);
+	void SearchRecursive(Node* rootptr, int data);
+	Node* SearchIterative(int data);
 		
 	Node* Delete(Node* rootptr,int data);
 
-	int MinMaxIterative(bool flag);
-	int MinMaxRecursive(Node* rootptr, bool flag);
+	Node* MinMaxIterative(bool flag);
+	Node* MinMaxRecursive(Node* rootptr, bool flag);
 	
 	int Height(Node* rootptr);
 	
@@ -57,13 +57,15 @@ public:
 	void InOrder(Node* rootptr);
 	void PostOrder(Node* rootptr);
 
-	int InOrderSuccessor(Node* rootptr,int data);
+	Node* InOrderSuccessor(int data);
+	Node* InOrderPredecessor(int data);
 };
 
 int main()
 {
 	BST T;
 	int key,temp;
+	Node* temp1;
 	cout<<"\n";
 	while(1)
 	{
@@ -82,7 +84,9 @@ int main()
 			"Option:12-DFS-PreOrder Traversal\n"
 			"Option:13-DFS-InOrder Traversal\n"
 			"Option:14-DFS-PostOrder Traversal\n"
-			"Option:15-Exit\n\n"
+			"Option:15-Inorder Successor of a node\n"
+			"Option:16-Inorder Predecessor of a node\n"
+			"Option:17-Exit\n\n"
 			"Select an Option: "
 		;
 
@@ -102,7 +106,7 @@ int main()
 			case 3:
 				cout<<"\nEnter the element to be searched: ";
 				cin>>temp;
-				T.SearchRecursive(temp,T.root);
+				T.SearchRecursive(T.root,temp);
 				break;
 			case 4:
 				cout<<"\nEnter the element to be searched: ";
@@ -115,16 +119,20 @@ int main()
 				T.root = T.Delete(T.root,temp);
 				break;
 			case 6:
-				cout<<"\nMinimum Element - "<<T.MinMaxRecursive(T.root,0);
+				temp1 = T.MinMaxRecursive(T.root,0);
+				cout<<"\nMinimum Element - "<<temp1->getData();
 				break;
 			case 7:
-				cout<<"\nMinimum Element - "<<T.MinMaxIterative(0);
+				temp1 = T.MinMaxIterative(0);
+				cout<<"\nMinimum Element - "<<temp1->getData();
 				break;
 			case 8:
-				cout<<"\nMaximum Element - "<<T.MinMaxRecursive(T.root,1);
+				temp1 = T.MinMaxRecursive(T.root,1);
+				cout<<"\nMaximum Element - "<<temp1->getData();
 				break;
 			case 9:
-				cout<<"\nMaximum Element - "<<T.MinMaxIterative(1);
+				temp1 = T.MinMaxIterative(1);
+				cout<<"\nMaximum Element - "<<temp1->getData();
 				break;
 			case 10:
 				cout<<"\nHeight of the BST - "<<T.Height(T.root);
@@ -146,6 +154,28 @@ int main()
 				T.PostOrder(T.root);
 				break;
 			case 15:
+				cout<<"\nEnter the node value to find it's InOrder Successor";
+				cin>>temp;
+				temp1 = T.InOrderSuccessor(temp);
+				if(temp1==NULL)
+				{
+					cout<<"\nThe node does not have a successor";
+					break;
+				}
+				cout<<"\nInOrder Successor - "<<temp1->getData();
+				break;
+			case 16:
+				cout<<"\nEnter the node value to find it's InOrder Predecessor";
+				cin>>temp;
+				temp1 = T.InOrderPredecessor(temp);
+				if(temp1==NULL)
+				{
+					cout<<"\nThe node does not have a predecessor";
+					break;
+				}
+				cout<<"\nInOrder Predecessor - "<<temp1->getData();
+				break;
+			case 17:
 				return 0;
 		}
 		cout<<"\n\n";
@@ -219,7 +249,7 @@ void BST::InsertIterative(int data)
 	cout<<endl;
 }
 
-void BST::SearchRecursive(int data, Node* rootptr)
+void BST::SearchRecursive(Node* rootptr, int data)
 {
 	if(rootptr==NULL)
 	{
@@ -232,37 +262,31 @@ void BST::SearchRecursive(int data, Node* rootptr)
 	else if(rootptr->getData() == data)
 	{
 		cout<<"Found\n";
+		return;
 	}
 	// Passing root of left/right subtree as parameter
 	else if(data <= rootptr->getData())
 	{
-
-		SearchRecursive(data,rootptr->left);
+		SearchRecursive(rootptr->left, data);
 	}
 	else
 	{
-		SearchRecursive(data,rootptr->right);
+		SearchRecursive(rootptr->right, data);
 	}
 }
 
-void BST::SearchIterative(int data)
+Node* BST::SearchIterative(int data)
 {
 	Node* current = root;
 	if(root == NULL)
 	{
 		cout<<"Not Found\n";
-		return;
+		return NULL;
 	}
 	// Executes until the function reaches the desired leaf node 
 	do
 	{
-		if(current->getData() == data)
-		{
-			cout<<"Found\n";
-			return;
-		}
-
-		else if(data < current->getData())
+		if(data < current->getData())
 		{
 			if(current->left == NULL)
 			{
@@ -270,7 +294,7 @@ void BST::SearchIterative(int data)
 			}
 			current = current->left;
 		}
-		else
+		else if(data > current->getData())
 		{
 			if(current->right == NULL)
 			{
@@ -278,10 +302,16 @@ void BST::SearchIterative(int data)
 			}
 			current = current->right;
 		}
+		if(data == current->getData())
+		{
+			cout<<"Found\n";
+			return current;
+		}
 	}
 	while(current->left != NULL || current->right != NULL);
 	
 	cout<<"Not Found\n";
+	return NULL;
 }
 
 Node* BST::Delete(Node* rootptr,int data)
@@ -323,16 +353,16 @@ Node* BST::Delete(Node* rootptr,int data)
 		// case:3 Node has two children
 		else
 		{
-			int minOfRight = MinMaxRecursive(rootptr->right,0);
-			rootptr->setData(minOfRight);
-			rootptr->right = Delete(rootptr->right,minOfRight);
+			Node* minOfRight = MinMaxRecursive(rootptr->right,0);
+			rootptr->setData(minOfRight->getData());
+			rootptr->right = Delete(rootptr->right,minOfRight->getData());
 		}
 
 	}
 	return rootptr;
 }
 
-int BST::MinMaxIterative(bool flag)
+Node* BST::MinMaxIterative(bool flag)
 {
 	// Setting flag
 	// flag = 0 - Find Min element
@@ -342,7 +372,7 @@ int BST::MinMaxIterative(bool flag)
 	if(root == NULL)
 	{
 		cout<<"ERROR: Tree is Empty\n";
-		return -1;
+		return NULL;
 	}
 
 	if(flag)
@@ -351,17 +381,17 @@ int BST::MinMaxIterative(bool flag)
 		{
 			current = current->right;
 		}
-		return current->getData();
+		return current;
 	}
 
 	while(current->left != NULL)
 	{
 		current = current->left;
 	}
-	return current->getData();
+	return current;
 }
 
-int BST::MinMaxRecursive(Node* rootptr, bool flag)
+Node* BST::MinMaxRecursive(Node* rootptr, bool flag)
 {
 	// Setting flag
 	// flag = 0 - Find Min element
@@ -370,14 +400,14 @@ int BST::MinMaxRecursive(Node* rootptr, bool flag)
 	if(rootptr == NULL)
 	{
 		cout<<"ERROR: Tree is Empty\n";
-		return -1;
+		return NULL;
 	}
 
 	if(flag)
 	{
 		if(rootptr->right == NULL)
 		{
-			return rootptr->getData();
+			return rootptr;
 		}
 		return MinMaxRecursive(rootptr->right,flag);
 	}
@@ -385,7 +415,7 @@ int BST::MinMaxRecursive(Node* rootptr, bool flag)
 	{
 		if(rootptr->left == NULL)
 		{
-			return rootptr->getData();
+			return rootptr;
 		}
 		return MinMaxRecursive(rootptr->left,flag);
 	}
@@ -448,4 +478,78 @@ void BST::PostOrder(Node* rootptr)
 	PostOrder(rootptr->left);
 	PostOrder(rootptr->right);
 	cout<<rootptr->getData()<<" ";
+}
+
+Node* BST::InOrderSuccessor(int data)
+{
+	// Address of the node for which Inorder successor is to be determined
+	Node* current = SearchIterative(data);
+	if(current == NULL) return NULL;
+
+	// Case 1: The node has a right subtree
+	if(current->right != NULL)
+	{
+		// Find minimum element in the right subtree
+		return MinMaxRecursive(current->right,0);
+	}
+	// Case 2: The node does not have a right subtree
+	else
+	{
+		Node* successor = NULL;
+		Node* ancestor = root;
+		// Traverse the tree until we reach the current node
+		while(ancestor != current)
+		{
+			if(current->getData() <= ancestor->getData())
+			{
+				// If the node value is greater than 
+				// the value in current, store it as successor
+				successor = ancestor;
+				ancestor = ancestor->left;
+			}
+			else
+			{
+				ancestor = ancestor->right;
+			}
+		}
+		return successor;
+	}
+}
+
+Node* BST::InOrderPredecessor(int data)
+{
+	// Address of the node for which Inorder predecessor is to be determined
+	Node* current = SearchIterative(data);
+	
+	if(current == NULL) return NULL;
+
+	// Case 1: The node has a left subtree
+	if(current->left != NULL)
+	{
+		// Find the node with maximum value on the left subtree
+		return MinMaxRecursive(current->left,1);
+	}
+	// Case 2: The node does not have a left subtree
+	else
+	{
+		Node* predecessor = NULL;
+		Node* ancestor = root;
+
+		// Traverse the tree until we reach the current node
+		while(ancestor != current)
+		{
+			if(current->getData() > ancestor->getData())
+			{
+				// If the node value is lesser than 
+				// the value in current, store it as predecessor
+				predecessor = ancestor;
+				ancestor = ancestor->right;
+			}
+			else
+			{
+				ancestor = ancestor->left;
+			}
+		}
+		return predecessor;
+	}
 }
