@@ -18,7 +18,10 @@
 
   To overcome this we use List Based Implementation, 
   where each vertex will have a list containing indices of vertices connected to them 
-
+  
+  Space Complexity of Adjacency List - O(|E|)
+  
+  In a List Searching and Deletion is expensive (O(n)). This can be
 */
 
 #include<iostream>

@@ -22,8 +22,11 @@
   E.g: If our graph deals with 100 vertices,
   adjacency matrix will be vacant to store 10000 edges. Consider we have 10 edges in our graph.
   Then we will be storing weights for 10 edges along with a bunch of redundant information. 
+  
+  For a dense graph Adjacency Matrix will be great 
+  But generally graphs will be sparse.
 
-  This can be avoided by using Adjacency List.
+  This Space-time tradeoff can be avoided by using an Adjacency List.
 
 */
 
