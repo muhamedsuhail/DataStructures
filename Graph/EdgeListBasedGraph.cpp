@@ -68,7 +68,7 @@ int main()
 	int key;
 	
 	// Declaring temp variables to use inside loop
-	int tempWeight, tempStart, tempEnd;
+	int tempWeight;
 	string tempLabel,tempLabel1;
 	vector<string> AdjacentVertices;
 

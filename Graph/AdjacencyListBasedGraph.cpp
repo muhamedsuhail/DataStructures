@@ -33,7 +33,7 @@ public:
 	}
 };
 
-// Declaring a Dynamic array to store the vertices and pointer to linked list(Adjacency List)
+// Declaring Dynamic arrays to store the vertices and pointers to linked list(Adjacency List)
 vector<string> vertices;
 vector<LinkedList*> edges;
 
@@ -54,7 +54,7 @@ int main()
 	int key;
 	
 	// Declaring temp variables to use inside loop
-	int tempWeight, tempStart, tempEnd;
+	int tempWeight;
 	string tempS, tempLabel, tempLabel1;
 	vector<string> AdjacentVertices;
 	LinkedList* tempLL;
@@ -173,6 +173,7 @@ vector<string> FindAdjacentNodes(string vertexLabel)
 	// Fetch the index of the node(As we store index of vertex as Edge terminals)  
 	int index = GetIndex(vertexLabel);
 	int NodeIndex;
+
 	Node* current = edges[index]->head;
 	while(current != NULL)
 	{
