@@ -1,3 +1,26 @@
+/*
+  Adjacency List Based Implementation of Graph
+
+  If |V| is n then |E| will be atmost n^2
+
+  Operation                       Time Complexity  
+
+  Finding Adjacent Nodes  		    O(|V|) 
+  
+  Check if given Nodes              O(|V|)
+  are connected
+
+  where,
+  	|E| - Number of Edges
+  	|V| - Number of Vertices
+
+  Space Complexity of Adjacency Matrix is O(|v|^2)
+
+  To overcome this we use List Based Implementation, 
+  where each vertex will have a list containing indices of vertices connected to them 
+
+*/
+
 #include<iostream>
 #include<vector>
 using namespace std;

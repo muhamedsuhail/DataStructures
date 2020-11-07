@@ -17,7 +17,7 @@
   Time Complexity is reduced by using adjacency matrix
 
   But Adjacency Matrix is not efficient in terms of Space.
-  Space Complexity - O(n^2)
+  Space Complexity - O(|v|^2)
 
   E.g: If our graph deals with 100 vertices,
   adjacency matrix will be vacant to store 10000 edges. Consider we have 10 edges in our graph.
