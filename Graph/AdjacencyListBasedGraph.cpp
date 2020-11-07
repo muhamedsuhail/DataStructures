@@ -172,7 +172,7 @@ vector<string> FindAdjacentNodes(string vertexLabel)
 	
 	// Fetch the index of the node(As we store index of vertex as Edge terminals)  
 	int index = GetIndex(vertexLabel);
-	int NodeIndex;panni sonna kelu paakala
+	int NodeIndex;
 	Node* current = edges[index]->head;
 	while(current != NULL)
 	{
