@@ -43,7 +43,7 @@ vector<string> vertices;
 vector<vector<int>> edges; 
 
 // Function to Create a new Vertex
-void CreateVertex(string tempLabel)
+void CreateVertex(string tempLabel);
 
 // Function to Create a new Edge(Connect two vertices)
 void CreateEdge(string vertexLabel1, string vertexLabel2, int weight);
