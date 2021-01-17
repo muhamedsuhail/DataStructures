@@ -128,7 +128,7 @@ public:
 		
 		for(int i=0;i<n-2;i++)
 		{
-			if(current->next->next == NULL)
+			if(current->next == NULL)
 			{
 				printf("\nEnter a valid Index\n");
 				return;
@@ -203,7 +203,7 @@ int main()
 	SLL ll;
 	while(1)
 	{
-		cout<<"Doubly Linked List: ";
+		cout<<"Singly Linked List: ";
 		ll.Print();
 		cout<<
 			"\nOption:1-Insert at Head\n"
